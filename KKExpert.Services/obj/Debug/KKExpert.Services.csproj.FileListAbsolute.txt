@@ -1,0 +1,5 @@
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Services\bin\Debug\KKExpert.Services.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Services\bin\Debug\KKExpert.Services.pdb
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Services\obj\Debug\KKExpert.Services.csprojResolveAssemblyReference.cache
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Services\obj\Debug\KKExpert.Services.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Services\obj\Debug\KKExpert.Services.pdb
