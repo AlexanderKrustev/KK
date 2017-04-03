@@ -16,9 +16,39 @@
     white-space: normal;
 }
 
+img {
+    height: 50px;
+    width: 50px;
+    align-content: flex-end;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar-default {
+    background-color: #6495ed;
+    border-color: #000000;
+}
+
+.nav.navbar-nav li a  {
+   color: #fff;
+ }
+
+.navbar-brand {
+    color: red;
+}
+
+.nav.navbar-nav a:hover {
+ color: rgb(127, 127, 221);
+}
+
+.innerbox
+{
+   width:250px; /* or whatever width you want. */
+   max-width:250px; /* or whatever width you want. */
+   display: inline-block;
 }

@@ -134,6 +134,7 @@
     <Compile Include="View Models\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="View Models\Manage\ChangePasswordViewModel.cs" />
     <Compile Include="View Models\Manage\ConfigureTwoFactorViewModel.cs" />
+    <Compile Include="View Models\Manage\EditProfileVm.cs" />
     <Compile Include="View Models\Manage\FactorViewModel.cs" />
     <Compile Include="View Models\Manage\IndexViewModel.cs" />
     <Compile Include="View Models\Manage\ManageLoginsViewModel.cs" />

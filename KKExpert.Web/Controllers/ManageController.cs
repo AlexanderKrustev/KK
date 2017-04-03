@@ -1,22 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-
-namespace KKExpert.Web.Controllers
+﻿namespace KKExpert.Web.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using KKExpert.Data;
+    using KKExpert.Model.Entity_Models;
     using KKExpert.Model.View_Models.Manage;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Rotativa;
+
 
     [Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        KKExpertContext context = new KKExpertContext();
         public ManageController()
         {
         }
@@ -100,119 +102,37 @@ namespace KKExpert.Web.Controllers
             return this.RedirectToAction("ManageLogins", new { Message = message });
         }
 
+
         //
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
+        // GET: /Manage/EditProfile
+        [Route("Manage/EditProfile")]
+        public ActionResult EditProfile()
         {
-            return this.View();
+          
+           string userId = this.HttpContext.User.Identity.GetUserId();
+           var user = context.Users.FirstOrDefault(x => x.ApplicationUserId == userId);
+           return this.View(user);
         }
 
         //
-        // POST: /Manage/AddPhoneNumber
+        // POST: /Manage/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        public ActionResult EditProfile(User dataEditProfileVm)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                return View(model);
+                
+
+                context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).FirstName = dataEditProfileVm.FirstName;
+                context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).LastName = dataEditProfileVm.LastName;
+                context.SaveChanges();
             }
-            // Generate the token and send it
-            var code = await this.UserManager.GenerateChangePhoneNumberTokenAsync(this.User.Identity.GetUserId(), model.Number);
-            if (this.UserManager.SmsService != null)
-            {
-                var message = new IdentityMessage
-                {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await this.UserManager.SmsService.SendAsync(message);
-            }
-            return this.RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+
+
+            return this.RedirectToAction("Index", "Home");
         }
 
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EnableTwoFactorAuthentication()
-        {
-            await this.UserManager.SetTwoFactorEnabledAsync(this.User.Identity.GetUserId(), true);
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            if (user != null)
-            {
-                await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return this.RedirectToAction("Index", "Manage");
-        }
-
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DisableTwoFactorAuthentication()
-        {
-            await this.UserManager.SetTwoFactorEnabledAsync(this.User.Identity.GetUserId(), false);
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            if (user != null)
-            {
-                await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return this.RedirectToAction("Index", "Manage");
-        }
-
-        //
-        // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
-        {
-            var code = await this.UserManager.GenerateChangePhoneNumberTokenAsync(this.User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? this.View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
-        }
-
-        //
-        // POST: /Manage/VerifyPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await this.UserManager.ChangePhoneNumberAsync(this.User.Identity.GetUserId(), model.PhoneNumber, model.Code);
-            if (result.Succeeded)
-            {
-                var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return this.RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
-            }
-            // If we got this far, something failed, redisplay form
-            this.ModelState.AddModelError("", "Failed to verify phone");
-            return View(model);
-        }
-
-        //
-        // POST: /Manage/RemovePhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemovePhoneNumber()
-        {
-            var result = await this.UserManager.SetPhoneNumberAsync(this.User.Identity.GetUserId(), null);
-            if (!result.Succeeded)
-            {
-                return this.RedirectToAction("Index", new { Message = ManageMessageId.Error });
-            }
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            if (user != null)
-            {
-                await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return this.RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        }
 
         //
         // GET: /Manage/ChangePassword
@@ -385,6 +305,15 @@ namespace KKExpert.Web.Controllers
             Error
         }
 
-#endregion
+        #endregion
+
+        public ActionResult DownloadEdit()
+        {
+           
+            return new ViewAsPdf("Rotativa")
+            {
+               FileName = "Test.pdf"
+            };
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace KKExpert.Web.Controllers
 {
+    using System;
+    using System.Data.Entity.Validation;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
@@ -11,21 +13,27 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
+    using KKEcpert.Service.Account;
+    using Rotativa;
 
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AccountService service;
 
         public AccountController()
         {
+            this.service = new AccountService(); //TO DO Ninject
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
+           
+            
         }
 
         public ApplicationSignInManager SignInManager
@@ -151,21 +159,15 @@
         {
             if (this.ModelState.IsValid)
             {
-                KKExpertContext context=new KKExpertContext();
+              
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user, model.Password);
-                this.UserManager.AddToRole(user.Id, "user");
-                var entityUser = new User()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Type = user
-                };
-                context.Users.Add(entityUser);
-                
+                this.service.RegisterUser(model,user);
+
+
                 if (result.Succeeded)
                 {
+                    this.UserManager.AddToRole(user.Id, "user");
                     await this.SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -492,5 +494,7 @@
             }
         }
         #endregion
+
+    
     }
 }

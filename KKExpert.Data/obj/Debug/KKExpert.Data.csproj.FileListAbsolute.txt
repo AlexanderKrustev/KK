@@ -34,3 +34,4 @@ C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Data\bin\Debug\Syst
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Data\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Data\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Data\bin\Debug\Microsoft.Owin.xml
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Data\bin\Debug\Rotativa.dll

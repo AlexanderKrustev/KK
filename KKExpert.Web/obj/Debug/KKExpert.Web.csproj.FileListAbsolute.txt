@@ -71,3 +71,6 @@ C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\Microsoft.O
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\obj\Debug\KKExpert.Web.dll
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\obj\Debug\KKExpert.Web.pdb
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\KKEcpert.Service.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\KKEcpert.Service.pdb
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\Rotativa.dll
