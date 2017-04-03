@@ -30,3 +30,5 @@ C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\bin\Debug\S
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\obj\Debug\KKEcpert.Service.csprojResolveAssemblyReference.cache
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\obj\Debug\KKEcpert.Service.dll
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\obj\Debug\KKEcpert.Service.pdb
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\bin\Debug\AutoMapper.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKEcpert.Service\bin\Debug\AutoMapper.xml

@@ -74,3 +74,5 @@ C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\obj\Debug\KKExp
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\KKEcpert.Service.dll
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\KKEcpert.Service.pdb
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\Rotativa.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\AutoMapper.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Web\bin\AutoMapper.xml

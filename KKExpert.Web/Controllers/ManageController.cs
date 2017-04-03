@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using KKEcpert.Service.Account;
     using KKExpert.Data;
     using KKExpert.Model.Entity_Models;
     using KKExpert.Model.View_Models.Manage;
@@ -18,9 +19,10 @@
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        KKExpertContext context = new KKExpertContext();
+        private AccountService service;
         public ManageController()
         {
+            this.service= new AccountService();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -108,26 +110,23 @@
         [Route("Manage/EditProfile")]
         public ActionResult EditProfile()
         {
-          
-           string userId = this.HttpContext.User.Identity.GetUserId();
-           var user = context.Users.FirstOrDefault(x => x.ApplicationUserId == userId);
-           return this.View(user);
+            string userId = this.HttpContext.User.Identity.GetUserId();
+            UserVm user = this.service.GetUserInfo(userId);
+            return this.View(user);
         }
 
         //
         // POST: /Manage/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(User dataEditProfileVm)
+        public ActionResult EditProfile(UserVm dataEditProfileVm)
         {
-            if (this.ModelState.IsValid)
-            {
-                
-
-                context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).FirstName = dataEditProfileVm.FirstName;
-                context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).LastName = dataEditProfileVm.LastName;
-                context.SaveChanges();
-            }
+           //if (this.ModelState.IsValid)
+           //{
+           //    context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).FirstName = dataEditProfileVm.FirstName;
+           //    context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).LastName = dataEditProfileVm.LastName;
+           //    context.SaveChanges();
+           //}
 
 
             return this.RedirectToAction("Index", "Home");
@@ -310,7 +309,7 @@
         public ActionResult DownloadEdit()
         {
            
-            return new ViewAsPdf("Rotativa")
+            return new ViewAsPdf("EditProfile")
             {
                FileName = "Test.pdf"
             };

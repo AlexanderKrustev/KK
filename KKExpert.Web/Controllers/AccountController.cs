@@ -14,6 +14,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using KKEcpert.Service.Account;
+    using KKExpert.Model.Binding_Models;
     using Rotativa;
 
     [Authorize]
@@ -155,7 +156,7 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(UserBm model)
         {
             if (this.ModelState.IsValid)
             {

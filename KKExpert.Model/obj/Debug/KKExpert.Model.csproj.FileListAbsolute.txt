@@ -37,4 +37,5 @@ C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\Sys
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\System.Web.WebPages.xml
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\obj\Debug\KKExpert.Model.csprojResolveAssemblyReference.cache
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\AutoMapper.dll
+C:\Users\krustev\Google Drive\VS WorkPlace\KKExpert\KKExpert.Model\bin\Debug\AutoMapper.xml
