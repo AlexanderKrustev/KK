@@ -6,8 +6,9 @@
     using System.Web.Mvc;
     using KKEcpert.Service.Account;
     using KKExpert.Data;
-    using KKExpert.Model.Entity_Models;
-    using KKExpert.Model.View_Models.Manage;
+    using Model.Binding_Models;
+    using Model.Entity_Models;
+    using Model.View_Models.Manage;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
@@ -20,9 +21,10 @@
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private AccountService service;
+
         public ManageController()
         {
-            this.service= new AccountService();
+            this.service = new AccountService();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -31,16 +33,11 @@
             this.SignInManager = signInManager;
         }
 
+
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return this._signInManager ?? this.HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            {
-                this._signInManager = value; 
-            }
+            get { return this._signInManager ?? this.HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { this._signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
@@ -49,10 +46,7 @@
             {
                 return this._userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
-            private set
-            {
-                this._userManager = value;
-            }
+            private set { this._userManager = value; }
         }
 
         //
@@ -60,13 +54,19 @@
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             this.ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+                message == ManageMessageId.ChangePasswordSuccess
+                    ? "Your password has been changed."
+                    : message == ManageMessageId.SetPasswordSuccess
+                        ? "Your password has been set."
+                        : message == ManageMessageId.SetTwoFactorSuccess
+                            ? "Your two-factor authentication provider has been set."
+                            : message == ManageMessageId.Error
+                                ? "An error has occurred."
+                                : message == ManageMessageId.AddPhoneSuccess
+                                    ? "Your phone number was added."
+                                    : message == ManageMessageId.RemovePhoneSuccess
+                                        ? "Your phone number was removed."
+                                        : "";
 
             var userId = this.User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -87,7 +87,10 @@
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var result = await this.UserManager.RemoveLoginAsync(this.User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            var result =
+                await
+                    this.UserManager.RemoveLoginAsync(this.User.Identity.GetUserId(),
+                        new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
@@ -101,13 +104,12 @@
             {
                 message = ManageMessageId.Error;
             }
-            return this.RedirectToAction("ManageLogins", new { Message = message });
+            return this.RedirectToAction("ManageLogins", new {Message = message});
         }
 
 
         //
         // GET: /Manage/EditProfile
-        [Route("Manage/EditProfile")]
         public ActionResult EditProfile()
         {
             string userId = this.HttpContext.User.Identity.GetUserId();
@@ -119,21 +121,44 @@
         // POST: /Manage/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(UserVm dataEditProfileVm)
+        public ActionResult EditProfile(UserBm dataEditProfileVm)
         {
-           //if (this.ModelState.IsValid)
-           //{
-           //    context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).FirstName = dataEditProfileVm.FirstName;
-           //    context.Users.SingleOrDefault(x => x.Id == dataEditProfileVm.Id).LastName = dataEditProfileVm.LastName;
-           //    context.SaveChanges();
-           //}
+            string userId = this.HttpContext.User.Identity.GetUserId();
+            if (this.ModelState.IsValid)
+            {
+                this.service.UpdateUser(dataEditProfileVm, userId);
+            }
 
 
             return this.RedirectToAction("Index", "Home");
         }
 
-
         //
+        // POST: /Manage/BuyInvoice
+        [HttpGet]
+      
+        public ActionResult BuyInvoice()
+        {
+
+
+            var user = this.UserManager.FindById(User.Identity.GetUserId());
+            this.UserManager.AddToRole(user.Id, "invoice");
+
+
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link
+            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return this.RedirectToAction("Create", "Invoices");
+       
+    }
+
+
+
+
+    //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {

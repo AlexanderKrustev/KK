@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-
-namespace KKExpert.Web
+﻿namespace KKExpert.Web
 {
-    using AutoMapper;
-    using KKExpert.Model.Binding_Models;
-    using KKExpert.Model.Entity_Models;
-    using KKExpert.Model.View_Models.Account;
-    using KKExpert.Model.View_Models.Manage;
-    using KKExpert.Web.Mapper;
-    using Microsoft.AspNet.Identity;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
+    using Model.Binding_Models;
+    using Model.Entity_Models;
+    using Model.View_Models.Manage;
 
     public class MvcApplication : HttpApplication
     {
@@ -32,9 +24,9 @@ namespace KKExpert.Web
         {
             AutoMapper.Mapper.Initialize(x =>
             {
-                x.AddProfile<UserBmToUser>();
-                x.AddProfile<UserVmToUser>();
-                x.AddProfile<UserToUserVm>();
+                x.CreateMap<UserBm, User>();
+                x.CreateMap<UserVm, User>(); ;
+                x.CreateMap<User, UserVm>(); ;
             });
 
 

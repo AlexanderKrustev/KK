@@ -2,7 +2,7 @@ namespace KKExpert.Data
 {
     using System;
     using System.Data.Entity;
-    using KKExpert.Model.Entity_Models;
+    using Model.Entity_Models;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     public class KKExpertContext : IdentityDbContext<ApplicationUser>

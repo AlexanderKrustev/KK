@@ -175,6 +175,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Invoice\Controllers\InvoicesController.cs" />
+    <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
+    <Compile Include="Atrribute\MyAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -182,9 +185,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mapper\UserBmToUser.cs" />
-    <Compile Include="Mapper\UserToUserVm.cs" />
-    <Compile Include="Mapper\UserVmToUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -199,6 +199,14 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Areas\Invoice\Views\web.config" />
+    <Content Include="Areas\Invoice\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Invoice\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoices\Create.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoices\Delete.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoices\Details.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoices\Edit.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoices\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -247,8 +255,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
     <Content Include="Views\Manage\Rotativa.cshtml" />
+    <Content Include="Views\Shared\BuyInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Views\Download\" />
   </ItemGroup>
   <ItemGroup>

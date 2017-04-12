@@ -21,19 +21,19 @@
         public UserVm GetUserInfo(string userId)
         {
             User user = this.Context.Users.FirstOrDefault(x => x.ApplicationUserId == userId);
-           // UserVm userVm = Mapper.Map<User, UserVm>(user);
-           UserVm userVm = new UserVm()
-           {
-               FirstName = user.FirstName,
-               LastName = user.LastName,
-               PhoneNumber = user.PhoneNumber
-           };
+            
+            UserVm userVm = Mapper.Map<User, UserVm>(user);
+           
             return userVm;
         }
 
-        public void EditUser()
+        public void UpdateUser(UserBm userBm,string userId)
         {
-            
+            User user = this.Context.Users.FirstOrDefault(x => x.ApplicationUserId == userId);
+            user.FirstName = userBm.FirstName;
+            user.LastName = userBm.LastName;
+            user.PhoneNumber = userBm.PhoneNumber;
+            Context.SaveChanges();
         }
     }
 }

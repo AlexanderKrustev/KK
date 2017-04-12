@@ -5,7 +5,7 @@ namespace KKExpert.Web
     using System.Security.Claims;
     using System.Threading.Tasks;
     using KKExpert.Data;
-    using KKExpert.Model.Entity_Models;
+    using Model.Entity_Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
