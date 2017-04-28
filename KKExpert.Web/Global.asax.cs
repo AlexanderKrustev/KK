@@ -19,8 +19,7 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            var migrator = new DbMigrator(new DbMigrationsConfiguration());
-            migrator.Update();
+            
 
         }
 
