@@ -1,5 +1,7 @@
 ﻿namespace KKExpert.Web
 {
+    using System.Configuration;
+    using System.Data.Entity.Migrations;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -17,7 +19,9 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-          
+            var migrator = new DbMigrator(new DbMigrationsConfiguration());
+            migrator.Update();
+
         }
 
         private void ConfigureMapper()
