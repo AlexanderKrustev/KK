@@ -13,9 +13,11 @@
         {
             User entityUser = Mapper.Map<UserBm, User>(model);
             entityUser.ApplicationUserId = user.Id;
-
+       
             this.Context.Users.Add(entityUser);
             this.Context.SaveChanges();
+
+            
         }
 
         public UserVm GetUserInfo(string userId)
