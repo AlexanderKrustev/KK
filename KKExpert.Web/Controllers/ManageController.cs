@@ -6,7 +6,7 @@
     using System.Web.Mvc;
     using KKEcpert.Service.Account;
     using KKExpert.Data;
-    using Model.Binding_Models;
+    using KKExpert.Model.View_Models.Account;
     using Model.Entity_Models;
     using Model.View_Models.Manage;
     using Microsoft.AspNet.Identity;

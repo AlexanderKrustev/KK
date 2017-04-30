@@ -1,12 +1,10 @@
 ﻿namespace KKExpert.Web
 {
-    using System.Configuration;
-    using System.Data.Entity.Migrations;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Model.Binding_Models;
+    using KKExpert.Model.View_Models.Account;
     using Model.Entity_Models;
     using Model.View_Models.Manage;
 

@@ -5,7 +5,6 @@
     using System.Web;
     using System.Web.Mvc;
     using KKEcpert.Service.Account;
-    using Model.Binding_Models;
     using Model.Entity_Models;
     using Model.View_Models.Account;
     using Microsoft.AspNet.Identity;
@@ -159,10 +158,10 @@
               
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user, model.Password);
-                this.service.RegisterUser(model,user);
 
                 if (result.Succeeded)
                 {
+                    this.service.RegisterUser(model, user);
                     this.UserManager.AddToRole(user.Id, "user");
                     await this.SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
