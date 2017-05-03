@@ -1,15 +1,28 @@
-﻿@model KKExpert.Model.Entity_Models.Invoice
+﻿@using KKExpert.Model.Entity_Models
+@model KKExpert.Model.View_Models.Invoice.InvoiceVm
+
 
 @{
-    ViewBag.Title = "Create";
+    List<Item> items = ViewBag.Data;
+    IEnumerable<SelectListItem> ItemsSelectList=new List<SelectListItem>();
+    if (items != null)
+    {
+        ItemsSelectList = items.Select(x => new SelectListItem() {Text = x.Name.Trim(), Value = x.Id.ToString()});
+    }
 }
 
-<h2>Create</h2>
+<h2>Create New Invoice</h2>
+<div>
+    <input type="button" value="Back to List" onclick="location.href = '@Url.Action("Index", "Invoices")'" class="btn btn-default">
+    <input type="button" value="Create Item" onclick="location.href = '@Url.Action("Create", "Items")'" class="btn btn-default">
+    <input type="button" value="Create Customer" onclick="location.href='@Url.Action("Create","Customers")'" class="btn btn-default">
+</div>
 
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Invoice</h4>
         <hr />
@@ -25,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfUssue, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfUssue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateOfUssue, new { htmlAttributes = new { @class = "form-control datepicker" }})
                 @Html.ValidationMessageFor(model => model.DateOfUssue, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,8 +46,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PaymentMethod, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+               @Html.EnumDropDownListFor(model=>model.PaymentMethod, new { htmlAttributes = new { @class = "form-control "}})
             </div>
         </div>
 
@@ -46,14 +58,41 @@
             </div>
         </div>
 
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Items:</label>
+            <div id="fields"></div>
+        </div>
+
+
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+                <button id="btnAddField" class="btn btn-default">Add Field</button>
             </div>
         </div>
     </div>
+
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var $fields = $('#fields');
+        $('#btnAddField').click(function (e) {
+            e.preventDefault();
+            $('@Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownList("ItemsSelectList", ItemsSelectList , "Select Item", new {@class="form-control col-md-offset-2 col-md-12"}).ToHtmlString()))').appendTo($fields);
+        });
+    });
+
+
+</script>

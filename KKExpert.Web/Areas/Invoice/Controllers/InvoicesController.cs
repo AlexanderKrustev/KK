@@ -1,44 +1,54 @@
 ﻿namespace KKExpert.Web.Areas.Invoice.Controllers
 {
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-    using KKExpert.Data;
+    using AutoMapper;
+    using KKEcpert.Service.Invoice;
+    using KKEcpert.Service.Item;
+    using KKExpert.Model.Binding_Models;
+    using KKExpert.Model.Entity_Models;
+    using KKExpert.Model.View_Models.Invoice;
     using KKExpert.Web.Atrribute;
-    using Invoice = KKExpert.Model.Entity_Models.Invoice;
 
-    
+
     [MyAuthorize(Roles = "invoice")]
     public class InvoicesController : Controller
     {
-        private KKExpertContext db = new KKExpertContext();
+        private InvoiceService invoiceService= new InvoiceService();
+        private ItemService itemService = new ItemService();
+        private int count = 0;
 
         // GET: Invoice/Invoices
         public ActionResult Index()
         {
-            return View(db.Invoices.ToList());
+            var invoices = this.invoiceService.GetAllInvoices();
+            IEnumerable<InvoiceVm> invoicesVm = Mapper.Map<IEnumerable<Invoice>, IEnumerable<InvoiceVm>>(invoices);
+            if (invoicesVm != null)
+            {
+                return View(invoicesVm);
+            }
+
+            return RedirectToAction("Create", "Invoices");
         }
 
         // GET: Invoice/Invoices/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = this.invoiceService.GetInvoiceById(id);
+
             if (invoice == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
-            return View(invoice);
+
+            return this.View(invoice);
         }
 
         // GET: Invoice/Invoices/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Data= this.itemService.GetAllItems();
+            return this.View();
         }
 
         // POST: Invoice/Invoices/Create
@@ -46,82 +56,18 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,InvoiceNumber,DateOfUssue,PaymentMethod,Price")] Invoice invoice)
+        public ActionResult Create(InvoiceBm invoice, string[] ItemsSelectList)
         {
-            if (ModelState.IsValid)
+
+            if (this.ModelState.IsValid)
             {
-                db.Invoices.Add(invoice);
-                db.SaveChanges();
+                this.invoiceService.CreateInvoice(invoice, ItemsSelectList);
                 return RedirectToAction("Index");
             }
 
-            return View(invoice);
+            return View();
         }
 
-        // GET: Invoice/Invoices/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Invoice invoice = db.Invoices.Find(id);
-            if (invoice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(invoice);
-        }
 
-        // POST: Invoice/Invoices/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,InvoiceNumber,DateOfUssue,PaymentMethod,Price")] Invoice invoice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(invoice).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(invoice);
-        }
-
-        // GET: Invoice/Invoices/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Invoice invoice = db.Invoices.Find(id);
-            if (invoice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(invoice);
-        }
-
-        // POST: Invoice/Invoices/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Invoice invoice = db.Invoices.Find(id);
-            db.Invoices.Remove(invoice);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+       }
 }

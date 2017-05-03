@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KKExpert.Model.Entity_Models.Invoice>
+﻿@model IEnumerable<KKExpert.Model.View_Models.Invoice.InvoiceVm>
 
 @{
     ViewBag.Title = "Index";
@@ -25,27 +25,36 @@
         </th>
         <th></th>
     </tr>
+    @if (Model.Count()>0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfUssue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfUssue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentMethod)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                    @Html.ActionLink("Details", "Details", new {id = item.id}) |
 
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+          <h2>No Invoices found</h2>
+          <div>
+            <input type="button" value="Create Invoice" onclick="location.href='@Url.Action("Create","Invoices")'" class="btn btn-default">
+           </div>
+    } 
 </table>

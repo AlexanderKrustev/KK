@@ -175,7 +175,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Invoice\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Invoice\Controllers\InvoicesController.cs" />
+    <Compile Include="Areas\Invoice\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
     <Compile Include="Atrribute\MyAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -198,15 +200,21 @@
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="App_Browsers\qt.browser" />
     <Content Include="Areas\Invoice\Views\web.config" />
     <Content Include="Areas\Invoice\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Invoice\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Invoice\Views\Invoices\Create.cshtml" />
-    <Content Include="Areas\Invoice\Views\Invoices\Delete.cshtml" />
     <Content Include="Areas\Invoice\Views\Invoices\Details.cshtml" />
-    <Content Include="Areas\Invoice\Views\Invoices\Edit.cshtml" />
     <Content Include="Areas\Invoice\Views\Invoices\Index.cshtml" />
+    <Content Include="Areas\Invoice\Views\Items\Create.cshtml" />
+    <Content Include="Areas\Invoice\Views\Items\Details.cshtml" />
+    <Content Include="Areas\Invoice\Views\Items\Index.cshtml" />
+    <Content Include="Areas\Invoice\Views\Shared\AddItem.cshtml" />
+    <Content Include="Areas\Invoice\Views\Customers\Create.cshtml" />
+    <Content Include="Areas\Invoice\Views\Customers\Delete.cshtml" />
+    <Content Include="Areas\Invoice\Views\Customers\Details.cshtml" />
+    <Content Include="Areas\Invoice\Views\Customers\Edit.cshtml" />
+    <Content Include="Areas\Invoice\Views\Customers\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -245,16 +253,11 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
-    <Content Include="Views\Manage\Rotativa.cshtml" />
     <Content Include="Views\Shared\BuyInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>

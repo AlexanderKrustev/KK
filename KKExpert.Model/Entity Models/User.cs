@@ -15,7 +15,7 @@
 
         public string PhoneNumber { get; set; }
         
-       // public virtual string ApplicationUserId { get; set; }
+        public virtual string ApplicationUserId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

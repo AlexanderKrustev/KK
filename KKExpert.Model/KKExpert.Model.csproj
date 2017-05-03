@@ -117,12 +117,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binding Models\InvoiceBm.cs" />
+    <Compile Include="Binding Models\ItemBm.cs" />
     <Compile Include="Binding Models\UserBm.cs" />
     <Compile Include="Entity Models\AplicationUser.cs" />
     <Compile Include="Entity Models\Customer.cs" />
     <Compile Include="Entity Models\Invoice.cs" />
     <Compile Include="Entity Models\Item.cs" />
     <Compile Include="Entity Models\User.cs" />
+    <Compile Include="Enums\PaymentTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View Models\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="View Models\Account\ExternalLoginListViewModel.cs" />
@@ -133,6 +136,8 @@
     <Compile Include="View Models\Account\ResetPasswordViewModel.cs" />
     <Compile Include="View Models\Account\SendCodeViewModel.cs" />
     <Compile Include="View Models\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="View Models\Invoice\InvoiceVm.cs" />
+    <Compile Include="View Models\Invoice\ItemVm.cs" />
     <Compile Include="View Models\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="View Models\Manage\ChangePasswordViewModel.cs" />
     <Compile Include="View Models\Manage\ConfigureTwoFactorViewModel.cs" />
@@ -147,6 +152,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

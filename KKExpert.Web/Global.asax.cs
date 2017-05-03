@@ -4,7 +4,9 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using KKExpert.Model.Binding_Models;
     using KKExpert.Model.View_Models.Account;
+    using KKExpert.Model.View_Models.Invoice;
     using Model.Entity_Models;
     using Model.View_Models.Manage;
 
@@ -26,12 +28,19 @@
             AutoMapper.Mapper.Initialize(x =>
             {
                 x.CreateMap<UserBm, User>();
-                x.CreateMap<UserVm, User>(); ;
-                x.CreateMap<User, UserVm>(); ;
+                x.CreateMap<UserVm, User>(); 
+                x.CreateMap<User, UserVm>(); 
+                x.CreateMap<ItemBm, Item>();
+                x.CreateMap<Item, ItemBm>();
+                x.CreateMap<InvoiceBm, Invoice>();
+                x.CreateMap<Invoice, InvoiceVm>();
+
             });
 
 
 
         }
     }
+
+  
 }

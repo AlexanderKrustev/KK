@@ -5,10 +5,8 @@
     using System.Web;
     using System.Web.Mvc;
     using KKEcpert.Service.Account;
-    using KKExpert.Data;
-    using KKExpert.Model.View_Models.Account;
-    using Model.Entity_Models;
-    using Model.View_Models.Manage;
+    using KKExpert.Model.Binding_Models;
+    using KKExpert.Model.View_Models.Manage;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
@@ -48,68 +46,11 @@
             }
             private set { this._userManager = value; }
         }
-
-        //
-        // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
-        {
-            this.ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess
-                    ? "Your password has been changed."
-                    : message == ManageMessageId.SetPasswordSuccess
-                        ? "Your password has been set."
-                        : message == ManageMessageId.SetTwoFactorSuccess
-                            ? "Your two-factor authentication provider has been set."
-                            : message == ManageMessageId.Error
-                                ? "An error has occurred."
-                                : message == ManageMessageId.AddPhoneSuccess
-                                    ? "Your phone number was added."
-                                    : message == ManageMessageId.RemovePhoneSuccess
-                                        ? "Your phone number was removed."
-                                        : "";
-
-            var userId = this.User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = this.HasPassword(),
-                PhoneNumber = await this.UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await this.UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await this.UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await this.AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
-        }
-
-        //
-        // POST: /Manage/RemoveLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
-        {
-            ManageMessageId? message;
-            var result =
-                await
-                    this.UserManager.RemoveLoginAsync(this.User.Identity.GetUserId(),
-                        new UserLoginInfo(loginProvider, providerKey));
-            if (result.Succeeded)
-            {
-                var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                message = ManageMessageId.RemoveLoginSuccess;
-            }
-            else
-            {
-                message = ManageMessageId.Error;
-            }
-            return this.RedirectToAction("ManageLogins", new {Message = message});
-        }
-
-
+        
         //
         // GET: /Manage/EditProfile
+        [HttpGet]
+      
         public ActionResult EditProfile()
         {
             string userId = this.HttpContext.User.Identity.GetUserId();
@@ -117,18 +58,24 @@
             return this.View(user);
         }
 
-        //
+      
         // POST: /Manage/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile(UserBm dataEditProfileVm)
         {
             string userId = this.HttpContext.User.Identity.GetUserId();
-            if (this.ModelState.IsValid)
-            {
-                this.service.UpdateUser(dataEditProfileVm, userId);
-            }
 
+           
+                if (this.service.UpdateUser(dataEditProfileVm, userId))
+                {
+                    this.ViewBag.StatusMessage = "Success";
+                }
+                else
+                {
+                    this.ViewBag.StatusMessage = "Wrong";
+                }
+            
 
             return this.RedirectToAction("Index", "Home");
         }
@@ -136,27 +83,16 @@
         //
         // POST: /Manage/BuyInvoice
         [HttpGet]
-      
         public ActionResult BuyInvoice()
         {
 
 
-            var user = this.UserManager.FindById(User.Identity.GetUserId());
+            var user = this.UserManager.FindById(this.User.Identity.GetUserId());
             this.UserManager.AddToRole(user.Id, "invoice");
-
-
-            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-            // Send an email with this link
-            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
             return this.RedirectToAction("Create", "Invoices");
        
     }
-
-
-
 
     //
         // GET: /Manage/ChangePassword
@@ -188,39 +124,7 @@
             this.AddErrors(result);
             return View(model);
         }
-
-        //
-        // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return this.View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-                var result = await this.UserManager.AddPasswordAsync(this.User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return this.RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-                }
-                this.AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
+        
         //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
@@ -308,15 +212,6 @@
             return false;
         }
 
-        private bool HasPhoneNumber()
-        {
-            var user = this.UserManager.FindById(this.User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
-        }
 
         public enum ManageMessageId
         {

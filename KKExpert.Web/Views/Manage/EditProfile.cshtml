@@ -1,12 +1,13 @@
-﻿@model KKExpert.Model.View_Models.Manage.UserVm
+﻿@using KKExpert.Model.View_Models.Manage
+@model UserVm
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Edit Your Profile";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edit your profile</h2>
-<div><a href="@Url.Action("DownloadEdit", "Manage")">Download ViewAsPdf</a></div>
+
 @using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -34,7 +35,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Save" />
+            <input type="submit" class="btn btn-info" value="Save" />
         </div>
     </div>
 }

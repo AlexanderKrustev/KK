@@ -1,4 +1,4 @@
-﻿namespace KKExpert.Model.View_Models.Account
+﻿namespace KKExpert.Model.Binding_Models
 {
     using System.ComponentModel.DataAnnotations;
 

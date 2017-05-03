@@ -3,37 +3,43 @@
 }
 
 <div class="jumbotron">
-    <h1>KK Portal</h1>
-    <p class="lead">Enjoy using software as a service. Do not buy useless software, by only the permision to user it.</p>
+    <h3>KKPortal</h3>
+    <p class="lead"></p>
     <p class="lead">Stay up to date !!!.</p>
     @Html.ActionLink("Learn More", "About", "Home", new { @class = "btn btn-primary btn-lg" })
 
 </div>
 
 <div class="row">
-    <div class="innerbox panel panel-info col-md-3 panel-body">
-        <h2>Getting started</h2>
-        <p>
-            Please register or login to browse our software packages.
-        </p>
-        <p><a class="btn btn-info" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a>
-        </p>
+    <div class="panel panel-info col-md-3 " style="height: 200px">
+        <div class="panel-heading">KKInvoice</div>
+        <div class="panel-body" style="height: 100px">
+            Fully functional  web-based invoice managing software
+        </div>
+        <div class="panel-footer">
+            <input type="button" value="To KKInvoice" onclick="location.href = '@Url.Action("Index", "Invoices", new {area = "Invoice"})'" class="btn btn-default">
+        </div>
     </div>
-    <div class="col-md-1 ">
+
+
+<div class="panel panel-info col-md-3 col-sm-offset-1" style="height: 200px">
+    <div class="panel-heading">KKWarehouse</div>
+    <div class="panel-body" style="height: 100px">
+        Fully functional  web-based warehouse system
     </div>
-    <div  class="innerbox panel panel-info col-md-3 panel-body">
-        <h2>Dare for more</h2>
-        <p>You can manage your personal subscription and be sure you are using lastest version of our products</p>
-        <p><a class="btn btn-info" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a>
-        </p>
-    </div>
-    <div class="col-md-1 ">
-    </div>
-    <div " class="innerbox panel panel-info col-md-3 panel-body">
-        <h2>Resume</h2>
-        <p>We can provide you all kinds of bussines software from invoice maker to complete inventoring system as well as
-            fully customized enterprise solutions.</p>
-        <p><a class="btn btn-info" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a>
-        </p>
+    <div class="panel-footer">
+        <input type="button" value="To KKInvoice" onclick="location.href = '@Url.Action("Index", "Invoices", new {area = "Invoice"})'" class="btn btn-default">
     </div>
 </div>
+
+
+<div class="panel panel-info col-md-3 col-sm-offset-1" style="height: 200px">
+    <div class="panel-heading">KKPOS</div>
+    <div class="panel-body" style="height: 100px">
+        Fully functional  web-based point of sell system
+    </div>
+    <div class="panel-footer">
+        <input type="button" value="To KKInvoice" onclick="location.href = '@Url.Action("Index", "Invoices", new {area = "Invoice"})'" class="btn btn-default">
+    </div>
+</div>
+    </div>

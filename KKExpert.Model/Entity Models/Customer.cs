@@ -5,13 +5,9 @@
 
     public class Customer 
     {
-       // private IList<Invoice> invoices;
-
-        public Customer(int id, string name, string vatNumber)
+     
+        public Customer()
         {
-            this.Id = id;
-            this.Name = name;
-            this.VATNumber = vatNumber;
             this.Invoices = new List<Invoice>();
         }
 
@@ -19,11 +15,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string VATNumber { get; set; }
-
         public virtual IList<Invoice> Invoices { get; set; }
-        public void AddInvoice(Invoice invoice)
-        {
-            this.Invoices.Add(invoice);
-        }
+        
     }
 }
