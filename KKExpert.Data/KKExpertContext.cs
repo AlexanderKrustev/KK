@@ -1,11 +1,11 @@
 namespace KKExpert.Data
 {
-    using System;
     using System.Data.Entity;
+    using Interfaces;
     using Model.Entity_Models;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public class KKExpertContext : IdentityDbContext<ApplicationUser>
+    public class KKExpertContext : IdentityDbContext<ApplicationUser>, IKKExpertContext
     {
        public KKExpertContext()
             : base("KKExpertContext", throwIfV1Schema: false)

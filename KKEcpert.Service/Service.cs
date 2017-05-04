@@ -1,16 +1,16 @@
 ﻿namespace KKEcpert.Service
 {
-    using KKExpert.Data;
+    using KKExpert.Data.Interfaces;
 
     public abstract class Service
     {
-        private KKExpertContext context;
+        private IKKExpertContext context;
 
-        protected Service()
+        protected Service(IKKExpertContext _context)
         {
-            this.context= new KKExpertContext();
+            this.context = _context;
         }
 
-        protected KKExpertContext Context => this.context;
+        protected IKKExpertContext Context => this.context;
     }
 }

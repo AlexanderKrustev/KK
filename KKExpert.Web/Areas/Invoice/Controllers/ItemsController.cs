@@ -1,16 +1,22 @@
 ﻿namespace KKExpert.Web.Areas.Invoice.Controllers
 {
     using System.Web.Mvc;
-    using KKEcpert.Service.Item;
+    using KKEcpert.Service;
+    using KKEcpert.Service.Interface;
     using KKExpert.Model.Binding_Models;
     using KKExpert.Model.Entity_Models;
+    using KKExpert.Model.View_Models.Invoice;
     using KKExpert.Web.Atrribute;
 
     [MyAuthorize(Roles = "invoice")]
     public class ItemsController : Controller
     {
-        private ItemService itemService=new ItemService();
+        private IItemService itemService;
 
+        public ItemsController(IItemService _itemService)
+        {
+            this.itemService = _itemService;
+        }
         // GET: Invoice/Items
         public ActionResult Index()
         {
@@ -27,12 +33,12 @@
         public ActionResult Details(int id)
         {
 
-            Item item = this.itemService.GetItemById(id);
+            ItemVm item = this.itemService.GetItemById(id);
             if (item == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
-            return View(item);
+            return this.View(item);
         }
 
         // GET: Invoice/Items/Create
@@ -48,7 +54,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Create(ItemBm item)
         {
-            if (this.ModelState.IsValid)
+            if (this.ModelState.IsValid && item!=null)
             {
                 this.itemService.CreateItem(item);
                 return RedirectToAction("Index");

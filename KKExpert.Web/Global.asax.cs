@@ -14,7 +14,7 @@
     {
         protected void Application_Start()
         {
-            ConfigureMapper();
+            this.ConfigureMapper();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -32,6 +32,8 @@
                 x.CreateMap<User, UserVm>(); 
                 x.CreateMap<ItemBm, Item>();
                 x.CreateMap<Item, ItemBm>();
+                x.CreateMap<Item, ItemVm>();
+                x.CreateMap<ItemVm, Item>();
                 x.CreateMap<InvoiceBm, Invoice>();
                 x.CreateMap<Invoice, InvoiceVm>();
 

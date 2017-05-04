@@ -4,7 +4,8 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-    using KKEcpert.Service.Account;
+    using KKEcpert.Service;
+    using KKEcpert.Service.Interface;
     using KKExpert.Model.Binding_Models;
     using Model.Entity_Models;
     using Model.View_Models.Account;
@@ -18,11 +19,11 @@
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private AccountService service;
+        private IAccountService service;
 
-        public AccountController()
+        public AccountController(IAccountService _accountService)
         {
-            this.service = new AccountService(); //TO DO Ninject
+            this.service = _accountService; //TO DO Ninject
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )

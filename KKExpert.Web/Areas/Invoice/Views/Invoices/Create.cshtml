@@ -1,9 +1,9 @@
-﻿@using KKExpert.Model.Entity_Models
+﻿@using KKExpert.Model.View_Models.Invoice
 @model KKExpert.Model.View_Models.Invoice.InvoiceVm
 
 
 @{
-    List<Item> items = ViewBag.Data;
+    List<ItemVm> items = ViewBag.Data;
     IEnumerable<SelectListItem> ItemsSelectList=new List<SelectListItem>();
     if (items != null)
     {

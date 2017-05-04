@@ -4,7 +4,8 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-    using KKEcpert.Service.Account;
+    using KKEcpert.Service;
+    using KKEcpert.Service.Interface;
     using KKExpert.Model.Binding_Models;
     using KKExpert.Model.View_Models.Manage;
     using Microsoft.AspNet.Identity;
@@ -18,11 +19,11 @@
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private AccountService service;
+        private IAccountService accountService;
 
-        public ManageController()
+        public ManageController(IAccountService _accountService)
         {
-            this.service = new AccountService();
+            this.accountService = _accountService;
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -54,7 +55,7 @@
         public ActionResult EditProfile()
         {
             string userId = this.HttpContext.User.Identity.GetUserId();
-            UserVm user = this.service.GetUserInfo(userId);
+            UserVm user = this.accountService.GetUserInfo(userId);
             return this.View(user);
         }
 
@@ -67,7 +68,7 @@
             string userId = this.HttpContext.User.Identity.GetUserId();
 
            
-                if (this.service.UpdateUser(dataEditProfileVm, userId))
+                if (this.accountService.UpdateUser(dataEditProfileVm, userId))
                 {
                     this.ViewBag.StatusMessage = "Success";
                 }

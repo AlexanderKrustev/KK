@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
     using AutoMapper;
-    using KKEcpert.Service.Invoice;
-    using KKEcpert.Service.Item;
+    using KKEcpert.Service;
+    using KKEcpert.Service.Interface;
     using KKExpert.Model.Binding_Models;
     using KKExpert.Model.Entity_Models;
     using KKExpert.Model.View_Models.Invoice;
@@ -14,9 +14,16 @@
     [MyAuthorize(Roles = "invoice")]
     public class InvoicesController : Controller
     {
-        private InvoiceService invoiceService= new InvoiceService();
-        private ItemService itemService = new ItemService();
-        private int count = 0;
+        private IInvoiceService invoiceService;
+        private IItemService itemService;
+     
+
+        public InvoicesController(IInvoiceService _invoiceService, IItemService _itemService)
+        {
+            this.invoiceService = _invoiceService;
+            this.itemService = _itemService;
+        }
+
 
         // GET: Invoice/Invoices
         public ActionResult Index()
